@@ -9,7 +9,7 @@ class Stack<T> {
     pop(): T | undefined {
         return this.list.pop()
     }
-    peek(): T {
+    peek(): T | undefined {
         return this.list[this.list.length - 1]
     }
     isEmpty(): boolean {
