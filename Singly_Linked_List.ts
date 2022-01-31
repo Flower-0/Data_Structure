@@ -101,4 +101,10 @@ class Sll {
         if (position === -1) return false
         return this.removeAt(position)
     }
+    isEmpty(): boolean {
+        return !!this.length
+    }
+    size(): number {
+        return this.length
+    }
 }
