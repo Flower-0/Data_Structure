@@ -61,17 +61,13 @@ class Bll {
                 this.tail.next = obj
                 this.tail = obj
             } else {
-                let {index,node} = position > this.length/2 ? {index:this.length-1, node:this.tail} : {index:0, node:this.head}
-                if (index === this.length-1) {
-                    console.log("我是从尾到头");
-                    
-                    while(position++ < index) { 
+                let { index, node } = position > (this.length - 1) / 2 ? { index: this.length - 1, node: this.tail } : { index: 0, node: this.head }
+                if (index === this.length - 1) {
+                    while (position++ < index) {
                         node = node.pre
                     }
                 } else {
-                    console.log("我是从头到尾");
-
-                    while(index++ < position) {
+                    while (index++ < position) {
                         node = node.next
                     }
                 }
@@ -83,56 +79,84 @@ class Bll {
         }
         return !!(this.length++)
     }
-    get(position: number): boolean | any{
+    get(position: number): boolean | any {
         if (position < 0 || position >= this.length) return false
-        let {index,node} = position > this.length/2 ? {index:this.length-1, node:this.tail} : {index:0, node:this.head}
-        if (index === this.length-1) {
-            console.log("我是从尾到头");
-            while(position++ < index) { 
-              
+        let { index, node } = position > (this.length - 1) / 2 ? { index: this.length - 1, node: this.tail } : { index: 0, node: this.head }
+        if (index === this.length - 1) {
+            while (position++ < index) {
                 node = node.pre
             }
         } else {
-            console.log("我是从头到尾");
-            while(index++ < position) {
+            while (index++ < position) {
                 node = node.next
             }
         }
         return node.data
     }
     indexOf(data: any): number {
-        let index = 0,node = this.head
-        while(node) {
+        let index = 0, node = this.head
+        while (node) {
             if (node.data === data) return index
-            node= node.next
+            node = node.next
             index++
         }
         return -1
     }
-    update(newData: any,position: number): boolean{
-      if (position < 0 || position >= this.length) return false
-      let {index,node} = position > this.length/2 ? {index:this.length-1, node:this.tail} : {index:0, node:this.head}
-      if (index === this.length-1) {
-          console.log("我是从尾到头");
-          while(position++ < index) { 
-              node = node.pre
-          }
-      } else {
-          console.log("我是从头到尾");
-          while(index++ < position) {
-              node = node.next
-          }
-      }
-      node.data = newData
-      return true
+    update(newData: any, position: number): boolean {
+        if (position < 0 || position >= this.length) return false
+        let { index, node } = position > (this.length - 1) / 2 ? { index: this.length - 1, node: this.tail } : { index: 0, node: this.head }
+        if (index === this.length - 1) {
+            while (position++ < index) {
+                node = node.pre
+            }
+        } else {
+            while (index++ < position) {
+                node = node.next
+            }
+        }
+        node.data = newData
+        return true
+    }
+    removeAt(position: number): boolean {
+        if (position < 0 || position >= this.length) return false
+        if (this.length === 1) {
+            this.head = null
+            this.tail = null
+        } else {
+            if (position === 0) {
+                this.head.next.pre = null
+                this.head = this.head.next
+            } else if (position === this.length - 1) {
+                this.tail.pre.next = null
+                this.tail = this.tail.pre
+            } else {
+                let { index, node } = position > (this.length - 1) / 2 ? { index: this.length - 1, node: this.tail } : { index: 0, node: this.head }
+                if (index === this.length - 1) {
+                    while (position++ < index) {
+                        node = node.pre
+                    }
+                } else {
+                    while (index++ < position) {
+                        node = node.next
+                    }
+                }
+                node.pre.next = node.next
+                node.next.pre = node.pre
+            }
+        }
+        this.length--
+        return true
+    }
+    remove(data: any): boolean {
+        return this.removeAt(this.indexOf(data))
     }
     isEmpty(): boolean {
-        return !!this.length
+        return this.length ? false : true
     }
     size(): number {
         return this.length
     }
-    getHead(): any{
+    getHead(): any {
         return this.head.data
     }
     getTail(): any {
@@ -140,27 +164,9 @@ class Bll {
     }
 }
 
-const obj = new Bll()
-obj.append("0")
-obj.append("1")
-obj.append("2")
-obj.append("3")
-obj.append("4")
-obj.append("5")
-obj.append("6")
-obj.append("7")
-obj.append("8")
 
-// console.log(obj.insert("666",6));
 
-// console.log(obj.forward());
-// console.log(obj.length);
 
-// console.log(obj.get(2));
-
-// console.log(obj.indexOf("3"));
-
-console.log(obj.forward())
 
 
 
